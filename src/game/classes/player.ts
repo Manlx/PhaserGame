@@ -46,11 +46,9 @@ export class Player {
 
     Player.cursorInput = Scene.input.keyboard!.createCursorKeys();
 
-    Player.Sprite = Scene.physics.add.sprite(0,375,Player.Assets.MainTexture.key).setScale(0.5).setOrigin(0,0).refreshBody();
+    Player.Sprite = Scene.physics.add.sprite(1500,1000,Player.Assets.MainTexture.key).setScale(0.5).setOrigin(0,0).refreshBody();
 
     Player.Sprite.setBounce(0.2);
-
-    Player.Sprite.setCollideWorldBounds(true);
 
     Player.Sprite.setDamping(true);
 
