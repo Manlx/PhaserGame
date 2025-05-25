@@ -1,8 +1,12 @@
 const AssetsKey = {
   Wall: {
     key: 'WallTexture',
-    path: 'assets/Wall.png'
-  } as const
+    path: 'assets/Ground.svg'
+  } as const,
+  PlatformHorizontal: {
+    key: 'HorizontalTexture',
+    path: 'assets/HorizontalPlatform.svg'
+  }
 } as const;
 
 export class Wall {
