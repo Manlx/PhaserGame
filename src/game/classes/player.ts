@@ -24,11 +24,13 @@ export class Player {
     return Keys;
   }
 
-  static JumpMultiplier = 2;
+  static JumpMultiplier = 3;
 
   static BaseMovementSpeed = 300;
 
   static MovementSpeedMultiplier = 1;
+
+  static DefaultBounce = 0.2;
 
   static get MovementSpeed() {
 
@@ -48,7 +50,7 @@ export class Player {
 
     Player.Sprite = Scene.physics.add.sprite(1500,1000,Player.Assets.MainTexture.key).setScale(0.5).setOrigin(0,0).refreshBody();
 
-    Player.Sprite.setBounce(0.2);
+    Player.Sprite.setBounce(this.DefaultBounce);
 
     Player.Sprite.setDamping(true);
 
@@ -62,12 +64,27 @@ export class Player {
 
   static UpdateLoop(){
 
+    Player.Sprite.body.allowGravity = !(Player.Sprite.body?.blocked.left || Player.Sprite.body?.blocked.right);
+
     if (Player.cursorInput.down.isDown){
 
-      Player.Sprite.setVelocityY(Player.MovementSpeed);
+      // Player.Sprite.setVelocityY(Player.MovementSpeed);
+      Player.Sprite.body.setBounce(0);
+      
+    }
+    else {
+      Player.Sprite.body.setBounce(this.DefaultBounce);
+
+      if (Player.Sprite.body?.blocked.left || Player.Sprite.body?.blocked.right){
+
+        if (Player.Sprite.body.velocity.y > -100 ){
+
+          Player.Sprite.body.setVelocityY(-100);
+        }
+      }
     }
 
-    if (Player.cursorInput.up.isDown && Player.Sprite.body?.blocked.down){
+    if (Player.cursorInput.up.isDown && (Player.Sprite.body?.blocked.down || Player.Sprite.body?.blocked.left || Player.Sprite.body?.blocked.right)){
 
       Player.Sprite.setVelocityY(-Player.MovementSpeed * Player.JumpMultiplier);
     }
@@ -81,7 +98,5 @@ export class Player {
 
       Player.Sprite.setVelocityX(Player.MovementSpeed);
     }
-
-    // Player.Sprite.body.
   }
 }
