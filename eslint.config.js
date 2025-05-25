@@ -26,6 +26,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       '@stylistic/indent': ['error', 2],
+      'semi': 'error'
     },
   },
 )
